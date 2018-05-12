@@ -49,19 +49,19 @@ def basic_info():
 	architecture  = pf.machine()
 	version       = pf.platform()
 	cpu           = pf.processor()
-  user          = gp.getuser()
-  sys_name      = pf.node()
+        user          = gp.getuser()
+        sys_name      = pf.node()
     
     if sys.platform == 'win32':
-		is_admin = ctypes.windll.shell32.IsUserAnAdmin()
+	is_admin = ctypes.windll.shell32.IsUserAnAdmin()
         
         if is_admin == 0:
-            is_admin = 'no'
+        	is_admin = 'no'
         else:
-			      is_admin = 'yes'
+		is_admin = 'yes'
 			
-	else:
-		is_admin = 'N/A'
+    else:
+	is_admin = 'N/A'
 	
 	basics = {'Architecture': architecture, 'Version': version, 'CPU': cpu, 'User',
 			  'System Name': sys_name, 'Is Admin': is_admin }  
@@ -112,7 +112,6 @@ def handle_windows():
 		print ("[+]Windows was detected, starting advanced enumeration")
 	
 	# This is just lazy coding i know.
-	
 	# Assemble Dict
 	Data = {}
 	Data["IP Config"]     = cmdline('ipconfig /all')
