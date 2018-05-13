@@ -74,8 +74,6 @@ def handle_linux():
 	if debug == True:
 		print ("[+]Linux was detected, starting advanced enumeration")
 	
-	# This is just lazy coding i know.
-	
 	# Assemble Dict
 	Data = {}
 	Data["IF Config"]     = cmdline('ifconfig -a')
@@ -92,12 +90,10 @@ def handle_linux():
 def handle_mac():
 	if debug == True:
 		print ("[+]Mac was detected, starting advanced enumeration")
-	
-	# This is just lazy coding i know
+		
 	# Assemble Dict
 	Data = {}
 	Data["IP Config"]     = cmdline('ifconfig -a')
-	Data["IP Tables"]     = cmdline('iptables -L')
 	Data["ARP Table"]     = cmdline('arp -e')
 	Data["Net Listening"] =	cmdline('netstat -etp')
 	Data["Net Connected"] = cmdline('netstat -ltp')	
@@ -111,7 +107,6 @@ def handle_windows():
 	if debug == True:
 		print ("[+]Windows was detected, starting advanced enumeration")
 	
-	# This is just lazy coding i know.
 	# Assemble Dict
 	Data = {}
 	Data["IP Config"]     = cmdline('ipconfig /all')
