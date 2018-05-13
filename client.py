@@ -183,7 +183,7 @@ def port_check():
 		s.close()
 	
 	for items in range(start_port, end_port+1):
-		tr = Thread(target=scan, args=(items,))
+		tr = Thread(target=host, args=(items,))
 		threads.append(tr)
 		tr.start()
 	
