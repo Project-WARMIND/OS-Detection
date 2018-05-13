@@ -63,8 +63,8 @@ def basic_info():
     else:
 	is_admin = 'N/A'
 	
-	basics = {'Architecture': architecture, 'Version': version, 'CPU': cpu, 'User',
-			  'System Name': sys_name, 'Is Admin': is_admin }  
+	basics = {'Architecture': architecture, 'Version': version, 'CPU': cpu, 
+		  'User': user, 'System Name': sys_name, 'Is Admin': is_admin }  
 	
 	return basics
 
