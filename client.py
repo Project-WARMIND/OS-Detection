@@ -95,8 +95,8 @@ def handle_mac():
 	Data = {}
 	Data["IP Config"]     = cmdline('ifconfig -a')
 	Data["ARP Table"]     = cmdline('arp -e')
-	Data["Net Listening"] =	cmdline('netstat -etp')
-	Data["Net Connected"] = cmdline('netstat -ltp')	
+	Data["Net Listening"] =	cmdline('netstat -ltp')
+	Data["Net Connected"] = cmdline('netstat -etp')	
 	Data["File System"]   = cmdline('df -h')
 	#Data["Host File"]     = cmdline('cat /etc/hosts')
 	
@@ -242,7 +242,11 @@ def surveyor_start():
 		return Report
 		
 	else:
-		return sys.platform
+		Report["WARNING"] = "Uncommon Platform Detected"
+		Report["Platform"] = sys.platform()
+		Report["Base Info"] = basic_info()
+		
+		return Report
 
 
 if __name__ == '__main__':
