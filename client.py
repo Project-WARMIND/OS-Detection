@@ -49,8 +49,8 @@ def basic_info():
 	architecture  = pf.machine()
 	version       = pf.platform()
 	cpu           = pf.processor()
-        user          = gp.getuser()
         sys_name      = pf.node()
+	user          = gp.getuser()
     
     if sys.platform == 'win32':
 	is_admin = ctypes.windll.shell32.IsUserAnAdmin()
@@ -79,8 +79,8 @@ def handle_linux():
 	Data["IF Config"]     = cmdline('ifconfig -a')
 	Data["IP Tables"]     = cmdline('iptables -L')
 	Data["ARP Table"]     = cmdline('arp -e')
-	Data["Net Listening"] =	cmdline('netstat -etp')
-	Data["Net Connected"] = cmdline('netstat -ltp')	
+	Data["Net Listening"] =	cmdline('netstat -ltp')
+	Data["Net Connected"] = cmdline('netstat -etp')	
 	Data["File System"]   = cmdline('df -h')
 	Data["Host File"]     = cmdline('cat /etc/hosts')
 	
@@ -98,7 +98,7 @@ def handle_mac():
 	Data["Net Listening"] =	cmdline('netstat -etp')
 	Data["Net Connected"] = cmdline('netstat -ltp')	
 	Data["File System"]   = cmdline('df -h')
-	Data["Host File"]     = cmdline('cat /etc/hosts')
+	#Data["Host File"]     = cmdline('cat /etc/hosts')
 	
 	return Data
 
@@ -139,18 +139,29 @@ def check_win_env():
 		for process in wmi.Win32_Process():
 			for processName in ProcessList:
 				if (process.Name.lower().find(processName) == 0):
-					# They know, shut it down!
-					sys.exit()
+					if debug == True:
+						return ("[!]It is likely we are in a VM.")
+					else:
+						# Stop executing
+						sys.exit()
 				else:
 					pass
 	except Exception as e:
-		pass
+		if debug == True:
+			return e
+		else:
+			pass
 	
 	# Is there a debugger present?
-	debug_present = windll.kernel32.IsDebuggerPresent()
+	debug_present = ctypes.windll.kernel32.IsDebuggerPresent()
 
-	if debug_present:
+	if debug_present and debug == True:
+		return ("[!]A debugger appears to be present")
+	elif debug_present:
+		# Stop executing
 		sys.exit()
+	else:
+		pass
 			
 
 # Port scanner
@@ -213,7 +224,10 @@ def surveyor_start():
 	
 	elif sys.platform == 'win32':
 		# Some anti forensics for Windows, just because i can
-		check_win_env()
+		try:
+			vm_check = check_win_env()
+		except:
+			print vm_check
 		
 		Report["Base Info"] = basic_info()
 		Report["Detailed Info"] = handle_windows()
