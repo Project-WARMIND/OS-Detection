@@ -122,7 +122,7 @@ def check_win_env():
 	try:
 		import wmi
 	except:
-		return "Import issue with WMI"
+		return ("[!]Import issue with WMI")
 	
 	ProcessList = ["ollydbg.exe","ProcessHacker.exe","vmsrvc.exe",
 	"fiddler.exe","tcpview.exe","vmware.exe","vbox.exe","vmvss.exe",
@@ -202,7 +202,7 @@ def port_check():
 	
 	if debug == True:
 		for ports in counting_open:
-			print ("[") + ("~") + ("]") + str(ports) + (" -> open.")
+			print ("[~]") + str(ports) + (" -> open.")
 		
 		print ("[+]Scan completed.")
 	
